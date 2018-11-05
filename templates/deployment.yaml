@@ -28,6 +28,7 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          {{- if .Values.database.service.class }}
           env:
           - name: DATABASE_URL
             valueFrom:
@@ -49,6 +50,7 @@ spec:
               secretKeyRef:
                 name: {{ template "app-with-binding.fullname" . }}-db-secret
                 key: password
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /
@@ -57,7 +59,9 @@ spec:
             httpGet:
               path: /
               port: http
+      {{- if .Values.database.service.class }}
       volumes:
         - name: db-credentials
           secret:
             secretName: {{ template "app-with-binding.fullname" . }}-db-secret
+      {{- end }}

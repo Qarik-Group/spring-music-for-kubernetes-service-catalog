@@ -1,4 +1,4 @@
----
+{{- if .Values.database.service.class -}}
 # svcat bind app-db --name db-binding --secret-name db-secret
 apiVersion: servicecatalog.k8s.io/v1beta1
 kind: ServiceBinding
@@ -8,3 +8,4 @@ spec:
   instanceRef:
     name: {{ include "app-with-binding.fullname" . }}-db-instance
   secretName: {{ template "app-with-binding.fullname" . }}-db-secret
+{{- end -}}

@@ -1,4 +1,4 @@
----
+{{- if .Values.database.service.class -}}
 # svcat provision app-db --class cleardb --plan spark
 apiVersion: servicecatalog.k8s.io/v1beta1
 kind: ServiceInstance
@@ -7,3 +7,4 @@ metadata:
 spec:
   clusterServiceClassExternalName: {{ .Values.database.service.class }}
   clusterServicePlanExternalName: {{ .Values.database.service.plan }}
+{{- end -}}
