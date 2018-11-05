@@ -5,5 +5,5 @@ kind: ServiceInstance
 metadata:
   name: {{ include "app-with-binding.fullname" . }}-db-instance
 spec:
-  clusterServiceClassExternalName: cleardb
-  clusterServicePlanExternalName: spark
+  clusterServiceClassExternalName: {{ .Values.database.service.class }}
+  clusterServicePlanExternalName: {{ .Values.database.service.plan }}
