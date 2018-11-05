@@ -23,6 +23,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["java", "-jar", "-Dspring.profiles.active=in-memory", "build/libs/spring-music.jar"]
           ports:
             - name: http
               containerPort: 8080
