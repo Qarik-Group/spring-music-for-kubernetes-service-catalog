@@ -23,11 +23,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command:
-            - java
-            - -jar
-            - -Dspring.profiles.active={{ .Values.database.springprofile }}
-            - build/libs/spring-music.jar
+          command: ['/app/start.sh']
           ports:
             - name: http
               containerPort: 8080
@@ -38,6 +34,21 @@ spec:
               secretKeyRef:
                 name: {{ template "app-with-binding.fullname" . }}-db-secret
                 key: uri
+          - name: DATABASE_JDBC_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "app-with-binding.fullname" . }}-db-secret
+                key: jdbcUrl
+          - name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "app-with-binding.fullname" . }}-db-secret
+                key: username
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "app-with-binding.fullname" . }}-db-secret
+                key: password
           livenessProbe:
             httpGet:
               path: /

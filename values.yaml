@@ -6,11 +6,9 @@ replicaCount: 1
 
 database:
   instance: app-db
-  # springprofile: postgres
-  springprofile: in-memory
 
 image:
-  repository: mxplusb/spring-music
+  repository: drnic/spring-music
   tag: latest
   pullPolicy: IfNotPresent
 
