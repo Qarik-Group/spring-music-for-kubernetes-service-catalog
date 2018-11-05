@@ -6,5 +6,5 @@ metadata:
   name: {{ include "app-with-binding.fullname" . }}-db-binding
 spec:
   instanceRef:
-    name: {{ .Values.database.instance }}
+    name: {{ include "app-with-binding.fullname" . }}-db-instance
   secretName: {{ template "app-with-binding.fullname" . }}-db-secret

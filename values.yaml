@@ -5,7 +5,9 @@
 replicaCount: 1
 
 database:
-  instance: app-db
+  service:
+    class: cleardb
+    plan: spark
 
 image:
   repository: drnic/spring-music

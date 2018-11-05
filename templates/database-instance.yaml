@@ -1,0 +1,9 @@
+---
+# svcat provision app-db --class cleardb --plan spark
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: {{ include "app-with-binding.fullname" . }}-db-instance
+spec:
+  clusterServiceClassExternalName: cleardb
+  clusterServicePlanExternalName: spark
