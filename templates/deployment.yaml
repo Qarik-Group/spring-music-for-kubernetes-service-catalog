@@ -23,11 +23,21 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["java", "-jar", "-Dspring.profiles.active=in-memory", "build/libs/spring-music.jar"]
+          command:
+            - java
+            - -jar
+            - -Dspring.profiles.active={{ .Values.database.springprofile }}
+            - build/libs/spring-music.jar
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
+          env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "app-with-binding.fullname" . }}-db-secret
+                key: uri
           livenessProbe:
             httpGet:
               path: /
@@ -36,3 +46,7 @@ spec:
             httpGet:
               path: /
               port: http
+      volumes:
+        - name: db-credentials
+          secret:
+            secretName: {{ template "app-with-binding.fullname" . }}-db-secret
