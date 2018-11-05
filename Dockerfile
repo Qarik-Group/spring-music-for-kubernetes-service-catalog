@@ -37,4 +37,3 @@ ENV PORT 8080
 WORKDIR /app
 
 CMD /app/start.sh
-# CMD java -jar -Dspring.profiles.active="in-memory" /app/spring-music.jar
